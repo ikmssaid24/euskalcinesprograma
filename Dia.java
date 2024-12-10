@@ -15,4 +15,5 @@ public class Dia {
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
+    
 }

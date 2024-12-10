@@ -1,8 +1,10 @@
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class App {
+    // Metodo de Bienvenida
     public static void mostrarBienvenida() {
         try {
             System.out.println("--------------------------------");
@@ -15,6 +17,7 @@ public class App {
         }
     }
 
+    // Metodo Login
     public static void pedirElLogin() {
         Scanner sc = new Scanner(System.in);
         String usuarioIntroducido = null;
@@ -37,6 +40,7 @@ public class App {
         } while (!claveCorrecta);
     }
 
+    // Metodo carga de menu
     public static int mostrarMenuInicial() {
         Scanner sc = new Scanner(System.in);
         int ret = -1;
@@ -61,6 +65,7 @@ public class App {
         return ret;
     }
 
+    // Metodo Cartelera de generos
     public static int mostrarMenuCartelera() {
         Scanner sc = new Scanner(System.in);
         int ret = -1;
@@ -87,6 +92,28 @@ public class App {
         return ret;
     }
 
+    // Metodo Cargar Peliculas
+    static void CargarPeliculas(ArrayList<Pelicula> peliculas) {
+        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\fichero.txt");
+        Scanner sc = null;
+
+        try {
+            sc = new Scanner(ficheer);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        while (sc.hasNextLine()) {
+            String string = sc.nextLine();
+            String[] partes = string.split("-");
+
+            String nombre = partes[0];
+            int duracion = Integer.parseInt(partes[1]);
+            String genero = partes[2];
+            Pelicula pelicula = new Pelicula(nombre, duracion, genero);
+            peliculas.add(pelicula);
+        }
+    }
+
     // declarar dias
     private static Dia sabado = new Dia(480);
     private static Dia domingo = new Dia(360);
@@ -100,19 +127,78 @@ public class App {
     }
 
     static void añadirPeli(ArrayList<Pelicula> peliculas) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Introduce el nombre de la peli: ");
-        String nombre = sc.nextLine();
-        System.out.println("Introduce la duracion de la peli: ");
-        int duracion = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Introduce el genero de la peli: ");
-        String generoPeli = sc.nextLine().toLowerCase();
-        Pelicula peli = new Pelicula(nombre, duracion, generoPeli);
-        peliculas.add(peli);
+        boolean i = true;
+        while (i) {
+            try {
+                Scanner sc = new Scanner(System.in);
+                boolean a=true;
+                String nombre="";
+                int duracion=0;
+                String generoPeli="";
+               while (a) {
+                System.out.println("Introduce el nombre de la peli: ");
+                nombre = sc.nextLine();
+                System.out.println("Introduce la duracion de la peli: ");
+                duracion = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Introduce el genero de la peli: ");
+                generoPeli = sc.nextLine().toLowerCase();
+
+                if (generoPeli.equals("terror") || generoPeli.equals("drama") || generoPeli.equals("cienciaficcion")
+                        || generoPeli.equals("comedia")) {
+                            a=false;
+                }else{
+                    System.out.println("\n Elija entre la 4 opciones \n Terror, Drama, Comedia,cienciaficcion");
+                            System.out.println("Ingrese los datos correctamente...");
+                            continue;
+                    
+                    }
+                
+               }
+
+                Pelicula peli = new Pelicula(nombre, duracion, generoPeli);
+                peliculas.add(peli);
+                i = false;
+            } catch (Exception e) {
+                System.out.println("Error, los datos introducidos son incorrectos, Intentelo de nuevo");
+            }
+        }
     }
 
-    
+    static int mostrarPeliculas(int generoSeleccionado, ArrayList<Pelicula> peliculas, Genero []generos){
+        Scanner sc=new Scanner(System.in);
+        int []posibles=new int[peliculas.size()];
+        int opcion=0;
+         try {
+            while (true) {
+                for (int i = 0; i < peliculas.size(); i++) {
+                    if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())) {
+                        System.out.println(i+"-"+peliculas.get(i).getNombre()+": "+peliculas.get(i).getDuracion());
+                        posibles[i]=1;
+                    }
+                }
+                opcion=sc.nextInt();
+                if (posibles[opcion]!=1) {
+                    System.out.println("Error la opcion introducida no esta entre las opciones disponibles");
+                }else{break;}
+            }
+
+         } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Error, se ha introducido un valor incorrecto");
+         }
+         return opcion;
+         
+        
+    }
+
+    static void añadirACatelera(int peliculaSeleccionada, ArrayList<Pelicula> peliculas, Cartelera cartelera){
+        for (int i = 0; i < cartelera.getPeliculasSeleccionadasSabado().length; i++) {
+            if (cartelera.getPeliculaSelecSabado(i).getNombre()==null) {
+                cartelera.añadirSelecSabado()
+            }
+        }
+    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         // mostrar bienvenido y esperar 3 segundos
@@ -131,13 +217,14 @@ public class App {
         Genero ciencaFiccion = new Genero("ciencaficcion");
         generos[3] = ciencaFiccion;
         // mostrar el menu inicial y elegir una opcion
-        while (true) {
+        salir: while (true) {
             int opcionInicial = mostrarMenuInicial();
             switch (opcionInicial) {
                 case 0:
-                    break;
+                    break salir;
                 case 1:
-
+                    CargarPeliculas(peliculas);
+                    System.out.println(peliculas.get(0).getNombre());
                     break;
                 case 2:
                     añadirPeli(peliculas);
@@ -146,6 +233,20 @@ public class App {
                     int opcionCartelera = mostrarMenuCartelera();
                     int generoSeleccionado = opcionCartelera - 1;
 
+                    switch (opcionCartelera) {
+                        case 0:
+                        break;
+                        case 1,2,3,4:
+
+                            break;
+                            case 5:
+                            mostrarTiempoRestante();
+                            Cartelera.mostrarCartelera();
+                            break;
+                    
+                        default:
+                            break;
+                    }
                     break;
 
                 default:
@@ -153,4 +254,5 @@ public class App {
             }
         }
     }
+
 }
