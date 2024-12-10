@@ -28,6 +28,7 @@ public class fich {
         peliculas.add(pelicula);
         }
         sc.close();
+        //comentario adicional
 
     }
 }
