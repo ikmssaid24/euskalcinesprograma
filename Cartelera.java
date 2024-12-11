@@ -15,6 +15,7 @@ public class Cartelera {
     public void setGeneroSelecDomingo(String generoSelecDomingo) {
         this.generoSelecDomingo += generoSelecDomingo;
     }
+    
     public void setGeneroSelecSabado(String generoSelecSabado) {
         this.generoSelecSabado += generoSelecSabado;
     }

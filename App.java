@@ -15,40 +15,40 @@ public class App {
             System.out.println(" ");
             TimeUnit.SECONDS.sleep(3);
         } catch (Exception e) {
-            // No hace falta poner nada aqui
+            // Excepcion en caso de error
         }
     }
 
-    // Metodo Login
+    // Metodo  verificar Login
     public static boolean verificacionDelLogin(String usuario, String contraseña){
         if (("admin".equalsIgnoreCase(usuario))
-        && ("1234".equalsIgnoreCase(contraseña))) {
+        && ("1234".equalsIgnoreCase(contraseña))) {   //validacion usuario y contraseña para dar acceso (independientemente de mayus o minus)
     return true;
 } else {
-    System.out.println("Error!!! Usuario o Clave incorrectos");
+    System.out.println("Error!!! Usuario o Clave incorrectos"); //El usuario no tiene acceso
     return false;
 }
     }
-
+    //Metodo pedir login
     public static void pedirElLogin() {
         Scanner sc = new Scanner(System.in);
-        String usuarioIntroducido = null;
+        String usuarioIntroducido = null; //inicializamos string vacios
         String claveIntroducida = null;
         do {
             System.out.print("Usuario: ");
-            usuarioIntroducido = sc.nextLine().trim();
+            usuarioIntroducido = sc.nextLine().trim(); //solicita usuario
 
             System.out.print("Clave: ");
-            claveIntroducida = sc.nextLine().trim();
+            claveIntroducida = sc.nextLine().trim(); //solicita contraseña
 
           
-        } while (!verificacionDelLogin(usuarioIntroducido, claveIntroducida));
+        } while (!verificacionDelLogin(usuarioIntroducido, claveIntroducida)); //conecta el metodo de pedir los datos el cual se repetira mientras los datos sean incorrectos
     }
 
     // Metodo carga de menu
     public static int mostrarMenuInicial() {
         Scanner sc = new Scanner(System.in);
-        int ret = -1;
+        int ret = -1; //variable de opcion
         do {
             try {
                 System.out.println("- Menu Inicial -");
@@ -58,22 +58,22 @@ public class App {
                 System.out.println("3. Crear cartelera");
                 System.out.println("0. Salir");
                 System.out.println(" ");
-                System.out.print("Escoge una opcion: ");
-                ret = sc.nextInt();
-                sc.nextLine();
+                System.out.print("Escoge una opcion: "); //opciones del menu
+                ret = sc.nextInt(); //Ingresar opcion
+                sc.nextLine(); //salto de linea
             } catch (Exception e) {
-                System.out.println("Error!!! Opcion incorrecta");
-                sc.nextLine();
+                System.out.println("Error!!! Opcion incorrecta"); //Excepcion cuando se elije una opcion diferente a las disponibles o distintos a un numero
+                sc.nextLine(); //Correcion para ingresar bien los datos
                 ret = -1;
             }
-        } while ((ret < 0) || (ret > 3));
-        return ret;
+        } while ((ret < 0) || (ret > 3)); //limitamos el bucle a las opciones del menu
+        return ret; //devolvemos la opcion elegida
     }
 
-    // Metodo Cartelera de generos
+    // Metodo menu Cartelera de generos
     public static int mostrarMenuCartelera() {
         Scanner sc = new Scanner(System.in);
-        int ret = -1;
+        int ret = -1; //variable de opcion
         do {
             try {
                 System.out.println("- Menu Inicial -");
@@ -84,22 +84,22 @@ public class App {
                 System.out.println("4. Ciencia Ficcion");
                 System.out.println("5. Ver Resumen");
                 System.out.println("0. Salir");
-                System.out.println(" ");
+                System.out.println(" "); // Enseñamos las opciones disponibles segun su genero
                 System.out.print("Escoge una opcion: ");
-                ret = sc.nextInt();
+                ret = sc.nextInt(); //variable de opcion
                 sc.nextLine();
             } catch (Exception e) {
-                System.out.println("Error!!! Opcion incorrecta");
-                sc.nextLine();
+                System.out.println("Error!!! Opcion incorrecta"); //se ingreso una opcion diferente a las disponibles o distinto a un numero
+                sc.nextLine(); //Re ingresar opcions
                 ret = -1;
             }
-        } while ((ret < 0) || (ret > 5));
-        return ret;
+        } while ((ret < 0) || (ret > 5)); //limite del bucle segun las opciones disponibles
+        return ret; //devolvemos la opcion elegida
     }
 
     // Metodo Cargar Peliculas
     static void CargarPeliculas(ArrayList<Pelicula> peliculas) {
-        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\euskalcinesprograma\\fichero.txt");
+        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\euskalcinesprograma\\fichero.txt"); //Creamos un archivo .txt el cual nos ingresa las peliculas guardadas
         Scanner sc = null;
 
         try {
@@ -130,14 +130,15 @@ public class App {
         System.out.println("Tiempo Restante del Domingo: " + domingo.getTiempo());
         System.out.println(" ");
     }
-
+    
+    //
     public static ArrayList<Pelicula> añadeArrayPelicula(ArrayList<Pelicula> peliculas, String nombre, int duracion,
             String generoPeli) {
         Pelicula peli = new Pelicula(nombre, duracion, generoPeli);
         peliculas.add(peli);
         return peliculas;
     }
-
+//
     static void añadirPeli(ArrayList<Pelicula> peliculas) {
         boolean i = true;
         while (i) {
@@ -180,7 +181,7 @@ public class App {
         Scanner sc = new Scanner(System.in);
         int[] posibles = new int[peliculas.size()];
         int opcion = 0;
-        System.out.println("Seleccione una pelicula:");
+        System.out.println("Seleccione una pelicula o pulse -1 para volver atras:");
         try {
             while (true) {
                 for (int i = 0; i < peliculas.size(); i++) {
@@ -191,6 +192,9 @@ public class App {
                     }
                 }
                 opcion = sc.nextInt();
+                if (opcion==-1) {
+                    break;
+                }
                 if (posibles[opcion] != 1) {
                     System.out.println("Error la opcion introducida no esta entre las opciones disponibles");
                 } else {
@@ -208,6 +212,9 @@ public class App {
 
     static boolean añadirACatelera(int peliculaSeleccionada, ArrayList<Pelicula> peliculas, Cartelera cartelera,
             Dia sabado, Dia domingo) {
+                if (peliculaSeleccionada==-1) {
+                    return false;
+                }
         Pelicula i = peliculas.get(peliculaSeleccionada);
         if (sabado.getTiempo() < 60 || cartelera.getGeneroSelecSabado().contains(i.getGenero())) {
             if (domingo.getTiempo() < 60 || cartelera.getGeneroSelecDomingo().contains(i.getGenero())) {
