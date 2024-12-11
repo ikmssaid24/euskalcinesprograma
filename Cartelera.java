@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Cartelera {
     private static ArrayList<Pelicula> peliculasSeleccionadasSabado = new ArrayList<Pelicula>();
     private static ArrayList<Pelicula> peliculasSeleccionadasDomingo = new ArrayList<Pelicula>();
-    private String generoSelecSabado="";
-    private String generoSelecDomingo="";
+    private static String generoSelecSabado="";
+    private static String generoSelecDomingo="";
+    private boolean fin=false;
 
     public void setGeneroSelecDomingo(String generoSelecDomingo) {
         this.generoSelecDomingo += generoSelecDomingo;
@@ -69,4 +72,38 @@ public class Cartelera {
         return peliculasSeleccionadasSabado;
     }
 
+    public void setFin(boolean fin) {
+        this.fin = fin;
+    }
+
+    public static boolean estaDeAcuerdo() {
+        Scanner sc=new Scanner(System.in);
+		boolean ret = false;
+		System.out.println("Se perderan los datos guardados... ");
+		System.out.print("Estas de acuerdo? [s, n]: ");
+		String opcion = sc.nextLine().trim().charAt(0) + "";
+		ret = opcion.equalsIgnoreCase("n");
+		return ret;
+	}
+
+    public static void mostrarFin() {
+		try {
+			System.out.println(" ");
+			System.out.println("- Cambios confirmados -");
+			System.out.println(" ");
+			TimeUnit.SECONDS.sleep(2);
+		} catch (Exception e) {
+			// No hace falta poner nada aqui
+		}
+	}
+
+    public static void resetear(Dia sabado, Dia domingo) {
+		sabado.setTiempo(480);
+		domingo.setTiempo(360);
+		peliculasSeleccionadasSabado = new ArrayList<Pelicula>();
+		peliculasSeleccionadasDomingo = new ArrayList<Pelicula>();
+        generoSelecSabado="";
+        generoSelecDomingo="";
+        
+	}
 }

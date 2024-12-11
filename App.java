@@ -94,7 +94,7 @@ public class App {
 
     // Metodo Cargar Peliculas
     static void CargarPeliculas(ArrayList<Pelicula> peliculas) {
-        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\fichero.txt");
+        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\euskalcinesprograma\\fichero.txt");
         Scanner sc = null;
 
         try {
@@ -104,7 +104,7 @@ public class App {
         }
         while (sc.hasNextLine()) {
             String string = sc.nextLine();
-            String[] partes = string.split("-");
+            String[] partes = string.split(" ");
 
             String nombre = partes[0];
             int duracion = Integer.parseInt(partes[1]);
@@ -195,82 +195,108 @@ public class App {
 
     }
 
-    static void añadirACatelera(int peliculaSeleccionada, ArrayList<Pelicula> peliculas, Cartelera cartelera,
+    static boolean añadirACatelera(int peliculaSeleccionada, ArrayList<Pelicula> peliculas, Cartelera cartelera,
             Dia sabado, Dia domingo) {
-                Pelicula i = peliculas.get(peliculaSeleccionada);
-                if (sabado.getTiempo()<60 || cartelera.getGeneroSelecSabado().contains(i.getGenero())) {
-                    if (domingo.getTiempo()<60|| cartelera.getGeneroSelecDomingo().contains(i.getGenero())) {
-                        System.out.println("se ha acabdo el tiempo del sabado y domingo o ya se han elegido los 4 generos en esos dias");
-                    }else{
-                        cartelera.añadirSelecDomingo(i);
-                        domingo.restar(peliculas.get(peliculaSeleccionada).getDuracion());
-                        cartelera.setGeneroSelecDomingo(peliculas.get(peliculaSeleccionada).getGenero());
-                    }
-                }else {
-                    cartelera.añadirSelecSabado(i);
-                    sabado.restar(peliculas.get(peliculaSeleccionada).getDuracion());
-                    cartelera.setGeneroSelecSabado(peliculas.get(peliculaSeleccionada).getGenero());
-                }
-                
-        
-        
+        Pelicula i = peliculas.get(peliculaSeleccionada);
+        if (sabado.getTiempo() < 60 || cartelera.getGeneroSelecSabado().contains(i.getGenero())) {
+            if (domingo.getTiempo() < 60 || cartelera.getGeneroSelecDomingo().contains(i.getGenero())) {
+                System.out.println(
+                        "se ha acabdo el tiempo del sabado y domingo o ya se han elegido los 4 generos en esos dias");
+                return true;
+            } else {
+                cartelera.añadirSelecDomingo(i);
+                domingo.restar(peliculas.get(peliculaSeleccionada).getDuracion());
+                cartelera.setGeneroSelecDomingo(peliculas.get(peliculaSeleccionada).getGenero());
+            }
+        } else {
+            cartelera.añadirSelecSabado(i);
+            sabado.restar(peliculas.get(peliculaSeleccionada).getDuracion());
+            cartelera.setGeneroSelecSabado(peliculas.get(peliculaSeleccionada).getGenero());
+        }
+        return false;
     }
 
     public static void main(String[] args) {
-        Cartelera cartelera = new Cartelera();
-        Scanner sc = new Scanner(System.in);
-        // mostrar bienvenido y esperar 3 segundos
-        mostrarBienvenida();
-        // pedir el login
-        pedirElLogin();
-        // declarar variavles y objetos
-        ArrayList<Pelicula> peliculas = new ArrayList<Pelicula>();
-        Genero[] generos = new Genero[4];
-        Genero drama = new Genero("drama");
-        generos[0] = drama;
-        Genero comedia = new Genero("comedia");
-        generos[1] = comedia;
-        Genero terror = new Genero("terror");
-        generos[2] = terror;
-        Genero cienciaFiccion = new Genero("cienciaficcion");
-        generos[3] = cienciaFiccion;
-        // mostrar el menu inicial y elegir una opcion
-        salir: while (true) {
-            int opcionInicial = mostrarMenuInicial();
-            switch (opcionInicial) {
-                case 0:
-                    break salir;
-                case 1:
-                    CargarPeliculas(peliculas);
-                    break;
-                case 2:
-                    añadirPeli(peliculas);
-                    break;
-                case 3:
-                    int opcionCartelera = mostrarMenuCartelera();
-                    int generoSeleccionado = opcionCartelera - 1;
+        fin: while (true) {
+            Cartelera cartelera = new Cartelera();
+            Scanner sc = new Scanner(System.in);
+            // mostrar bienvenido y esperar 3 segundos
+            mostrarBienvenida();
+            // pedir el login
+            pedirElLogin();
+            // declarar variavles y objetos
+            ArrayList<Pelicula> peliculas = new ArrayList<Pelicula>();
+            Genero[] generos = new Genero[4];
+            Genero drama = new Genero("drama");
+            generos[0] = drama;
+            Genero comedia = new Genero("comedia");
+            generos[1] = comedia;
+            Genero terror = new Genero("terror");
+            generos[2] = terror;
+            Genero cienciaFiccion = new Genero("cienciaficcion");
+            generos[3] = cienciaFiccion;
+            // mostrar el menu inicial y elegir una opcion
+            salir: while (true) {
+                int opcionInicial = mostrarMenuInicial();
+                switch (opcionInicial) {
+                    case 0:
+                        break fin;
+                    case 1:
+                        CargarPeliculas(peliculas);
+                        break;
+                    case 2:
+                        añadirPeli(peliculas);
+                        break;
+                    case 3:
+                        int opcionCartelera = mostrarMenuCartelera();
+                        int generoSeleccionado = opcionCartelera - 1;
 
-                    switch (opcionCartelera) {
-                        case 0:
-                            break;
-                        case 1, 2, 3, 4:
+                        switch (opcionCartelera) {
+                            case 0:
+                                break;
+                            case 1, 2, 3, 4:
+                                boolean sabadoLleno = false;
+                                if (sabado.getTiempo() < 60
+                                        || cartelera.getPeliculasSeleccionadasSabado().size() == 4) {
+                                    sabadoLleno = true;
+                                }
+                                if (cartelera.getGeneroSelecDomingo()
+                                        .contains(generos[generoSeleccionado].getNombre())) {
+                                    System.out.println(
+                                            "este genero ya ha sido seleccionado para el domingo, porfabor elija otro");
+                                    break;
+                                } else if (cartelera.getGeneroSelecSabado()
+                                        .contains(generos[generoSeleccionado].getNombre()) && sabadoLleno == false) {
+                                    System.out.println(
+                                            "este genero ya ha sido seleccionado para el sabado, porfabor elija otro");
+                                    break;
+                                }
+                                if (añadirACatelera(mostrarPeliculas(generoSeleccionado, peliculas, generos), peliculas,
+                                        cartelera, sabado, domingo)) {
+                                            if (cartelera.estaDeAcuerdo()) {
+                                                cartelera.resetear(sabado, domingo);
+                                                System.out.println("-cambios eliminados-");
+                                            }else{
+                                                cartelera.resetear(sabado, domingo);
+                                                cartelera.mostrarFin();
+                                                break salir;
+                                                
+                                            }
+                                }
+                                break;
+                            case 5:
+                                mostrarTiempoRestante();
+                                Cartelera.mostrarCartelera();
+                                break;
 
-                            añadirACatelera(mostrarPeliculas(generoSeleccionado, peliculas, generos), peliculas,
-                                    cartelera, sabado, domingo);
+                            default:
+                                break;
+                        }
+                        break;
 
-                            break;
-                        case 5:
-                            mostrarTiempoRestante();
-                            Cartelera.mostrarCartelera();
-                            break;
-
-                        default:
-                            break;
-                    }
-                    break;
-
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
         }
     }
