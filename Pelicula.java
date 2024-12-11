@@ -1,3 +1,6 @@
+package euskalcinesprograma;
+
+
 public class Pelicula {
     private String nombre;
     private int duracion;

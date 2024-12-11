@@ -1,3 +1,5 @@
+package euskalcinesprograma;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -18,11 +20,20 @@ public class App {
     }
 
     // Metodo Login
+    public static boolean verificacionDelLogin(String usuario, String contraseña){
+        if (("admin".equalsIgnoreCase(usuario))
+        && ("1234".equalsIgnoreCase(contraseña))) {
+    return true;
+} else {
+    System.out.println("Error!!! Usuario o Clave incorrectos");
+    return false;
+}
+    }
+
     public static void pedirElLogin() {
         Scanner sc = new Scanner(System.in);
         String usuarioIntroducido = null;
         String claveIntroducida = null;
-        boolean claveCorrecta = false;
         do {
             System.out.print("Usuario: ");
             usuarioIntroducido = sc.nextLine().trim();
@@ -30,14 +41,8 @@ public class App {
             System.out.print("Clave: ");
             claveIntroducida = sc.nextLine().trim();
 
-            if (("admin".equalsIgnoreCase(usuarioIntroducido))
-                    && ("1234".equals(claveIntroducida))) {
-                claveCorrecta = true;
-            } else {
-                System.out.println("Error!!! Usuario o Clave incorrectos");
-            }
-
-        } while (!claveCorrecta);
+          
+        } while (!verificacionDelLogin(usuarioIntroducido, claveIntroducida));
     }
 
     // Metodo carga de menu
@@ -104,7 +109,7 @@ public class App {
         }
         while (sc.hasNextLine()) {
             String string = sc.nextLine();
-            String[] partes = string.split(" ");
+            String[] partes = string.split("-");
 
             String nombre = partes[0];
             int duracion = Integer.parseInt(partes[1]);
@@ -124,6 +129,13 @@ public class App {
         System.out.println("Tiempo Restante del Sabado: " + sabado.getTiempo());
         System.out.println("Tiempo Restante del Domingo: " + domingo.getTiempo());
         System.out.println(" ");
+    }
+
+    public static ArrayList<Pelicula> añadeArrayPelicula(ArrayList<Pelicula> peliculas, String nombre, int duracion,
+            String generoPeli) {
+        Pelicula peli = new Pelicula(nombre, duracion, generoPeli);
+        peliculas.add(peli);
+        return peliculas;
     }
 
     static void añadirPeli(ArrayList<Pelicula> peliculas) {
@@ -156,8 +168,7 @@ public class App {
 
                 }
 
-                Pelicula peli = new Pelicula(nombre, duracion, generoPeli);
-                peliculas.add(peli);
+                peliculas = añadeArrayPelicula(peliculas, nombre, duracion, generoPeli);
                 i = false;
             } catch (Exception e) {
                 System.out.println("Error, los datos introducidos son incorrectos, Intentelo de nuevo");
@@ -273,15 +284,15 @@ public class App {
                                 }
                                 if (añadirACatelera(mostrarPeliculas(generoSeleccionado, peliculas, generos), peliculas,
                                         cartelera, sabado, domingo)) {
-                                            if (cartelera.estaDeAcuerdo()) {
-                                                cartelera.resetear(sabado, domingo);
-                                                System.out.println("-cambios eliminados-");
-                                            }else{
-                                                cartelera.resetear(sabado, domingo);
-                                                cartelera.mostrarFin();
-                                                break salir;
-                                                
-                                            }
+                                    if (cartelera.estaDeAcuerdo()) {
+                                        cartelera.resetear(sabado, domingo);
+                                        System.out.println("-cambios eliminados-");
+                                    } else {
+                                        cartelera.resetear(sabado, domingo);
+                                        cartelera.mostrarFin();
+                                        break salir;
+
+                                    }
                                 }
                                 break;
                             case 5:

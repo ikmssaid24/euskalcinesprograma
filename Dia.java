@@ -1,3 +1,6 @@
+package euskalcinesprograma;
+
+
 public class Dia {
     private int tiempo;
 
@@ -15,5 +18,5 @@ public class Dia {
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
-    
+     
 }
