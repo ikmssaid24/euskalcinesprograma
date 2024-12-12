@@ -201,12 +201,13 @@ public class App {
                     break;
                 }
             }
-
+            return opcion;
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println("Error, se ha introducido un valor incorrecto");
+            return-1;
         }
-        return opcion;
+        
 
     }
 
@@ -308,11 +309,13 @@ public class App {
                                 break;
 
                             default:
+                            System.out.println("opcion no disponible");
                                 break;
                         }
                         break;
 
                     default:
+                    System.out.println("opcion no disponible");
                         break;
                 }
             }
