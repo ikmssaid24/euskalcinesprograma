@@ -184,7 +184,7 @@ public class App {
         System.out.println("Seleccione una pelicula o pulse -1 para volver atras:");
         try {
             while (true) {
-                for (int i = 0; i < peliculas.size(); i++) {
+                for (int i = 0; i < peliculas.size(); i++ ) {
                     if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())) {
                         System.out.println(
                                 i + "-" + peliculas.get(i).getNombre() + ": " + peliculas.get(i).getDuracion());
