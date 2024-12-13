@@ -5,3 +5,5 @@ men in black-60-cienciaficcion
 el diario de greg-140-comedia
 Casablanca-102-drama
 Ciudadano Kane-119-drama
+larga-460-terror
+corta-12-terror

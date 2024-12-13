@@ -19,36 +19,39 @@ public class App {
         }
     }
 
-    // Metodo  verificar Login
-    public static boolean verificacionDelLogin(String usuario, String contraseña){
+    // Metodo verificar Login
+    public static boolean verificacionDelLogin(String usuario, String contraseña) {
         if (("admin".equalsIgnoreCase(usuario))
-        && ("1234".equalsIgnoreCase(contraseña))) {   //validacion usuario y contraseña para dar acceso (independientemente de mayus o minus)
-    return true;
-} else {
-    System.out.println("Error!!! Usuario o Clave incorrectos"); //El usuario no tiene acceso
-    return false;
-}
+                && ("1234".equalsIgnoreCase(contraseña))) { // validacion usuario y contraseña para dar acceso
+                                                            // (independientemente de mayus o minus)
+            return true;
+        } else {
+            System.out.println("Error!!! Usuario o Clave incorrectos"); // El usuario no tiene acceso
+            return false;
+        }
     }
-    //Metodo pedir login
+
+    // Metodo pedir login
     public static void pedirElLogin() {
         Scanner sc = new Scanner(System.in);
-        String usuarioIntroducido = null; //inicializamos string vacios
+        String usuarioIntroducido = null; // inicializamos string vacios
         String claveIntroducida = null;
         do {
             System.out.print("Usuario: ");
-            usuarioIntroducido = sc.nextLine().trim(); //solicita usuario
+            usuarioIntroducido = sc.nextLine().trim(); // solicita usuario
 
             System.out.print("Clave: ");
-            claveIntroducida = sc.nextLine().trim(); //solicita contraseña
+            claveIntroducida = sc.nextLine().trim(); // solicita contraseña
 
-          
-        } while (!verificacionDelLogin(usuarioIntroducido, claveIntroducida)); //conecta el metodo de pedir los datos el cual se repetira mientras los datos sean incorrectos
+        } while (!verificacionDelLogin(usuarioIntroducido, claveIntroducida)); // conecta el metodo de pedir los datos
+                                                                               // el cual se repetira mientras los datos
+                                                                               // sean incorrectos
     }
 
     // Metodo carga de menu
     public static int mostrarMenuInicial() {
         Scanner sc = new Scanner(System.in);
-        int ret = -1; //variable de opcion
+        int ret = -1; // variable de opcion
         do {
             try {
                 System.out.println("- Menu Inicial -");
@@ -58,22 +61,23 @@ public class App {
                 System.out.println("3. Crear cartelera");
                 System.out.println("0. Salir");
                 System.out.println(" ");
-                System.out.print("Escoge una opcion: "); //opciones del menu
-                ret = sc.nextInt(); //Ingresar opcion
-                sc.nextLine(); //salto de linea
+                System.out.print("Escoge una opcion: "); // opciones del menu
+                ret = sc.nextInt(); // Ingresar opcion
+                sc.nextLine(); // salto de linea
             } catch (Exception e) {
-                System.out.println("Error!!! Opcion incorrecta"); //Excepcion cuando se elije una opcion diferente a las disponibles o distintos a un numero
-                sc.nextLine(); //Correcion para ingresar bien los datos
+                System.out.println("Error!!! Opcion incorrecta"); // Excepcion cuando se elije una opcion diferente a
+                                                                  // las disponibles o distintos a un numero
+                sc.nextLine(); // Correcion para ingresar bien los datos
                 ret = -1;
             }
-        } while ((ret < 0) || (ret > 3)); //limitamos el bucle a las opciones del menu
-        return ret; //devolvemos la opcion elegida
+        } while ((ret < 0) || (ret > 3)); // limitamos el bucle a las opciones del menu
+        return ret; // devolvemos la opcion elegida
     }
 
     // Metodo menu Cartelera de generos
     public static int mostrarMenuCartelera() {
         Scanner sc = new Scanner(System.in);
-        int ret = -1; //variable de opcion
+        int ret = -1; // variable de opcion
         do {
             try {
                 System.out.println("- Menu Inicial -");
@@ -86,23 +90,34 @@ public class App {
                 System.out.println("0. Salir");
                 System.out.println(" "); // Enseñamos las opciones disponibles segun su genero
                 System.out.print("Escoge una opcion: ");
-                ret = sc.nextInt(); //variable de opcion
+                ret = sc.nextInt(); // variable de opcion
                 sc.nextLine();
             } catch (Exception e) {
-                System.out.println("Error!!! Opcion incorrecta"); //se ingreso una opcion diferente a las disponibles o distinto a un numero
-                sc.nextLine(); //Re ingresar opcions
+                System.out.println("Error!!! Opcion incorrecta"); // se ingreso una opcion diferente a las disponibles o
+                                                                  // distinto a un numero
+                sc.nextLine(); // Re ingresar opcions
                 ret = -1;
             }
-        } while ((ret < 0) || (ret > 5)); //limite del bucle segun las opciones disponibles
-        return ret; //devolvemos la opcion elegida
+        } while ((ret < 0) || (ret > 5)); // limite del bucle segun las opciones disponibles
+        return ret; // devolvemos la opcion elegida
     }
 
     // Metodo Cargar Peliculas
     static void CargarPeliculas(ArrayList<Pelicula> peliculas) {
-        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\euskalcinesprograma\\fichero.txt"); //Creamos un archivo .txt el cual nos ingresa las peliculas guardadas
+        File ficheer = new File("C:\\Users\\gelaule\\Documents\\clase\\java\\src\\euskalcinesprograma\\fichero.txt"); // Creamos
+                                                                                                                      // un
+                                                                                                                      // archivo
+                                                                                                                      // .txt
+                                                                                                                      // el
+                                                                                                                      // cual
+                                                                                                                      // nos
+                                                                                                                      // ingresa
+                                                                                                                      // las
+                                                                                                                      // peliculas
+                                                                                                                      // guardadas
         Scanner sc = null;
 
-        try {
+        try {// Control de errores
             sc = new Scanner(ficheer);
         } catch (Exception e) {
             // TODO: handle exception
@@ -130,25 +145,27 @@ public class App {
         System.out.println("Tiempo Restante del Domingo: " + domingo.getTiempo());
         System.out.println(" ");
     }
-    
-    //
+
+    // Metodo para crear ima pelicula nueva y añadirla a la lista de peliculas
     public static ArrayList<Pelicula> añadeArrayPelicula(ArrayList<Pelicula> peliculas, String nombre, int duracion,
             String generoPeli) {
         Pelicula peli = new Pelicula(nombre, duracion, generoPeli);
         peliculas.add(peli);
         return peliculas;
     }
-//
+
+    // Metodo para mostrar en pantalla la solicitud de informacion acerca de la
+    // pelicula
     static void añadirPeli(ArrayList<Pelicula> peliculas) {
-        boolean i = true;
+        boolean i = true; // Variable auxiliar
         while (i) {
-            try {
+            try { // Control de errores
                 Scanner sc = new Scanner(System.in);
-                boolean a = true;
+                boolean a = true; // Boolean auxiliar
                 String nombre = "";
                 int duracion = 0;
                 String generoPeli = "";
-                while (a) {
+                while (a) { // Condicion de la variable auxiliar (a
                     System.out.println("Introduce el nombre de la peli: ");
                     nombre = sc.nextLine();
                     System.out.println("Introduce la duracion de la peli: ");
@@ -159,7 +176,8 @@ public class App {
 
                     if (generoPeli.equals("terror") || generoPeli.equals("drama") || generoPeli.equals("cienciaficcion")
                             || generoPeli.equals("comedia")) {
-                        a = false;
+                        a = false; // Si el genero ingresado esta dentro de las opciones, salimos del bucle de
+                                   // preguntas
                     } else {
                         System.out.println("\n Elija entre la 4 opciones \n Terror, Drama, Comedia,cienciaficcion");
                         System.out.println("Ingrese los datos correctamente...");
@@ -170,71 +188,109 @@ public class App {
                 }
 
                 peliculas = añadeArrayPelicula(peliculas, nombre, duracion, generoPeli);
-                i = false;
-            } catch (Exception e) {
+                i = false; // Cuando se hallan ingresado todos los atributos de una pelicula, salimos del
+                           // bucle
+            } catch (Exception e) { // Control de excepciones
                 System.out.println("Error, los datos introducidos son incorrectos, Intentelo de nuevo");
             }
         }
     }
 
-    static int mostrarPeliculas(int generoSeleccionado, ArrayList<Pelicula> peliculas, Genero[] generos) {
+    // Metodo para mostrar en pantalla las peliculas existentes
+    static int mostrarPeliculas(int generoSeleccionado, ArrayList<Pelicula> peliculas, Genero[] generos,
+            boolean sabadofin) {
         Scanner sc = new Scanner(System.in);
-        int[] posibles = new int[peliculas.size()];
+        int[] posibles = new int[peliculas.size()]; // Auxiliar para confirmar la pelicula existente
         int opcion = 0;
         System.out.println("Seleccione una pelicula o pulse -1 para volver atras:");
-        try {
+        try { // Control de errores
             while (true) {
-                for (int i = 0; i < peliculas.size(); i++ ) {
-                    if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())) {
+                for (int i = 0; i < peliculas.size(); i++) {
+                    if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())
+                            && peliculas.get(i).getDuracion() < sabado.getTiempo()) { // Condicion si la pelicula existe
                         System.out.println(
-                                i + "-" + peliculas.get(i).getNombre() + ": " + peliculas.get(i).getDuracion());
+                                i + "-" + peliculas.get(i).getNombre() + ": " + peliculas.get(i).getDuracion()
+                                        + " min"); //
+                        posibles[i] = 1; // La pelicula existe
+                    } else if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())
+                            && peliculas.get(i).getDuracion() < domingo.getTiempo() && sabadofin) {
+                        System.out.println(
+                                i + "-" + peliculas.get(i).getNombre() + ": " + peliculas.get(i).getDuracion()
+                                        + " min");
                         posibles[i] = 1;
                     }
                 }
                 opcion = sc.nextInt();
-                if (opcion==-1) {
+                if (opcion == -1) { // Opcion de salida
                     break;
                 }
-                if (posibles[opcion] != 1) {
+                if (posibles[opcion] != 1) { // Control de opcion imprevista
                     System.out.println("Error la opcion introducida no esta entre las opciones disponibles");
                 } else {
                     break;
                 }
             }
             return opcion;
-        } catch (Exception e) {
+        } catch (Exception e) { // Control de excepciones
             // TODO: handle exception
             System.out.println("Error, se ha introducido un valor incorrecto");
-            return-1;
+            return -1; // Devolver salida
         }
-        
 
     }
 
+    // Metodo para añadir la cartelera de peliculas
     static boolean añadirACatelera(int peliculaSeleccionada, ArrayList<Pelicula> peliculas, Cartelera cartelera,
-            Dia sabado, Dia domingo) {
-                if (peliculaSeleccionada==-1) {
-                    return false;
-                }
+            Dia sabado, Dia domingo, boolean sabadoTiempoAcabado, boolean domingoTiempoAcabado) {
+        if (peliculaSeleccionada == -1) {
+            return false; // Sale del programa
+        }
         Pelicula i = peliculas.get(peliculaSeleccionada);
-        if (sabado.getTiempo() < 60 || cartelera.getGeneroSelecSabado().contains(i.getGenero())) {
-            if (domingo.getTiempo() < 60 || cartelera.getGeneroSelecDomingo().contains(i.getGenero())) {
+        if (sabadoTiempoAcabado) { // Control de la disponibilidad de tiempo el sabado
+            if (domingoTiempoAcabado) { // Control de la disponibilidad de tiempo el domingo
                 System.out.println(
                         "se ha acabdo el tiempo del sabado y domingo o ya se han elegido los 4 generos en esos dias");
-                return true;
+                return true; // Muestra el resumen
             } else {
-                cartelera.añadirSelecDomingo(i);
-                domingo.restar(peliculas.get(peliculaSeleccionada).getDuracion());
-                cartelera.setGeneroSelecDomingo(peliculas.get(peliculaSeleccionada).getGenero());
+                cartelera.añadirSelecDomingo(i); // añadir cartelera de domingo
+                domingo.restar(peliculas.get(peliculaSeleccionada).getDuracion()); // resta el tiempo de pelicula con el
+                                                                                   // disponible el domingo
+                cartelera.setGeneroSelecDomingo(peliculas.get(peliculaSeleccionada).getGenero()); // ingresa la pelicula
+                                                                                                  // en la cartelera
+                                                                                                  // segun su genero
             }
         } else {
-            cartelera.añadirSelecSabado(i);
-            sabado.restar(peliculas.get(peliculaSeleccionada).getDuracion());
-            cartelera.setGeneroSelecSabado(peliculas.get(peliculaSeleccionada).getGenero());
+            cartelera.añadirSelecSabado(i); // añadir cartelera de domingo
+            sabado.restar(peliculas.get(peliculaSeleccionada).getDuracion()); // resta el tiempo de pelicula con el
+                                                                              // disponible el sabado
+            cartelera.setGeneroSelecSabado(peliculas.get(peliculaSeleccionada).getGenero()); // ingresa la pelicula en
+                                                                                             // la cartelera segun su
+                                                                                             // genero
         }
-        return false;
+        return false; // sale del programa
     }
 
+    static int  (ArrayList<Pelicula>peliculas, int generoSeleccionado, Genero[]generos){
+        
+        boolean sabadoLleno = false;
+        boolean domingoLleno = false;
+        boolean sabadoTiempoAcabado = true;
+        boolean domingoTiempoAcabado = true;
+        for (int i = 0; i < peliculas.size(); i++) {
+            if (peliculas.get(i).getDuracion() < sabado.getTiempo() && !peliculas.get(i)
+                    .getGenero().equals(generos[generoSeleccionado].getNombre())
+                    && !sabadoLleno) {
+                sabadoTiempoAcabado = false;
+            }
+            if (peliculas.get(i).getDuracion() < domingo.getTiempo()) {
+                domingoTiempoAcabado = false;
+            }
+        }
+        if (sabadoTiempoAcabado
+                || cartelera.getPeliculasSeleccionadasSabado().size() == 4) {
+            sabadoLleno = true;
+        }
+    }
     public static void main(String[] args) {
         fin: while (true) {
             Cartelera cartelera = new Cartelera();
@@ -274,11 +330,8 @@ public class App {
                             case 0:
                                 break;
                             case 1, 2, 3, 4:
-                                boolean sabadoLleno = false;
-                                if (sabado.getTiempo() < 60
-                                        || cartelera.getPeliculasSeleccionadasSabado().size() == 4) {
-                                    sabadoLleno = true;
-                                }
+
+                                
                                 if (cartelera.getGeneroSelecDomingo()
                                         .contains(generos[generoSeleccionado].getNombre())) {
                                     System.out.println(
@@ -290,8 +343,12 @@ public class App {
                                             "este genero ya ha sido seleccionado para el sabado, porfabor elija otro");
                                     break;
                                 }
-                                if (añadirACatelera(mostrarPeliculas(generoSeleccionado, peliculas, generos), peliculas,
-                                        cartelera, sabado, domingo)) {
+                                if (añadirACatelera(
+                                        mostrarPeliculas(generoSeleccionado, peliculas, generos, sabadoTiempoAcabado),
+                                        peliculas,
+                                        cartelera, sabado, domingo, sabadoTiempoAcabado, domingoTiempoAcabado)) {
+                                    mostrarTiempoRestante();
+                                    cartelera.mostrarCartelera();
                                     if (cartelera.estaDeAcuerdo()) {
                                         cartelera.resetear(sabado, domingo);
                                         System.out.println("-cambios eliminados-");
@@ -309,13 +366,13 @@ public class App {
                                 break;
 
                             default:
-                            System.out.println("opcion no disponible");
+                                System.out.println("opcion no disponible");
                                 break;
                         }
                         break;
 
                     default:
-                    System.out.println("opcion no disponible");
+                        System.out.println("opcion no disponible");
                         break;
                 }
             }
