@@ -7,3 +7,33 @@ Casablanca-102-drama
 Ciudadano Kane-119-drama
 larga-460-terror
 corta-12-terror
+El secreto de sus ojos-129-drama
+Forrest Gump-142-drama
+La la land-128-comedia
+The Hangover-100-comedia
+El laberinto del fauno-118-drama
+La habitación-118-drama
+It Follows-100-terror
+Hereditary-127-terror
+Inception-148-ciencia ficción
+Interstellar-169-ciencia ficción
+Ex Machina-108-ciencia ficción
+Matrix-136-ciencia ficción
+The Truman Show-103-comedia
+Los cazafantasmas-107-comedia
+El conjuro-112-terror
+Tiburón-124-terror
+A Ghost Story-92-drama
+Memento-113-drama
+Jumanji: Welcome to the Jungle-119-comedia
+The Martian-144-ciencia ficción
+Arrival-116-ciencia ficción
+The Babadook-93-terror
+El exorcista-122-terror
+Una mente brillante-137-drama
+La muerte de Stalin-107-comedia
+Gravity-91-ciencia ficción
+Shutter Island-138-drama
+The Witch-93-terror
+La gran belleza-141-drama
+A Quiet Place-90-terror
