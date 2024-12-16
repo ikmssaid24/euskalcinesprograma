@@ -196,53 +196,59 @@ public class App {
         }
     }
 
-    // Metodo para mostrar en pantalla las peliculas existentes
-    static int mostrarPeliculas(int generoSeleccionado, ArrayList<Pelicula> peliculas, Genero[] generos,
-            boolean sabadofin) {
-        Scanner sc = new Scanner(System.in);
-        int[] posibles = new int[peliculas.size()]; // Auxiliar para confirmar la pelicula existente
-        int opcion = 0;
-        System.out.println("Seleccione una pelicula o pulse -1 para volver atras:");
-        try { // Control de errores
-            while (true) {
-                for (int i = 0; i < peliculas.size(); i++) {
+static int mostrarPeliculas(int generoSeleccionado, ArrayList<Pelicula> peliculas, Genero[] generos, boolean sabadofin) {
+    Scanner sc = new Scanner(System.in);
+    int opcion = -1;
 
-                    if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())
-                            && peliculas.get(i).getDuracion() < sabado.getTiempo()) { // Condicion si la pelicula existe
+    System.out.println("Seleccione una pelicula o pulse -1 para volver atras:");
 
-                        System.out.println(
-                                i + "-" + peliculas.get(i).getNombre() + ": " + peliculas.get(i).getDuracion()
-                                        + " min");
-                        //
-                        posibles[i] = 1; // La pelicula existe
-                    } else if (peliculas.get(i).getGenero().equals(generos[generoSeleccionado].getNombre())
-                            && peliculas.get(i).getDuracion() < domingo.getTiempo() && sabadofin) {
-                        System.out.println(
-                                i + "-" + peliculas.get(i).getNombre() + ": " + peliculas.get(i).getDuracion()
-                                        + " min");
+    try {
+        // Muestra las películas disponibles con opciones
+        int numOpcion = 1;
+        for (int i = 0; i < peliculas.size(); i++) {
+            Pelicula pelicula = peliculas.get(i);
 
-                        posibles[i] = 1;
-                    }
-                }
-                opcion = sc.nextInt();
-                if (opcion == -1) { // Opcion de salida
-                    break;
-                }
-                if (posibles[opcion] != 1) { // Control de opcion imprevista
-                    System.out.println("Error la opcion introducida no esta entre las opciones disponibles");
-                } else {
-                    break;
-                }
+            // verificador si la película cumple con los criterios de género y tiempo
+            boolean PeliExiste = pelicula.getGenero().equals(generos[generoSeleccionado].getNombre()) &&
+                ((sabadofin && pelicula.getDuracion() < domingo.getTiempo()) || 
+                (!sabadofin && pelicula.getDuracion() < sabado.getTiempo()));
+
+            if (PeliExiste) {
+                System.out.println(numOpcion + " - " + pelicula.getNombre() + ": " + pelicula.getDuracion() + " min");
+                numOpcion++;
             }
-            return opcion;
-        } catch (Exception e) { // Control de excepciones
-            // TODO: handle exception
-            System.out.println("Error, se ha introducido un valor incorrecto");
-            return -1; // Devolver salida
+        }
+        opcion = sc.nextInt();
+        if (opcion == -1) {
+            return -1; //Salir
         }
 
-    }
+        // Validar que la opción seleccionada corresponde a una película válida
+        numOpcion = 1; // Se reinicia el contador
+        for (int i = 0; i < peliculas.size(); i++) {
+            Pelicula pelicula = peliculas.get(i);
 
+            boolean PeliExiste = pelicula.getGenero().equals(generos[generoSeleccionado].getNombre()) &&
+            ((sabadofin && pelicula.getDuracion() < domingo.getTiempo()) || 
+            (!sabadofin && pelicula.getDuracion() < sabado.getTiempo()));
+
+            if (PeliExiste) {
+                if (numOpcion == opcion) {
+                    return i; //devuelve el numero del txt
+                }
+                numOpcion++;
+            }
+        }
+
+        //Control de errores
+        System.out.println("Error: la opción ingresada no está entre las disponibles.");
+        return -1;
+
+    } catch (Exception e) {
+        System.out.println("Error: se ha introducido un valor incorrecto.");
+        return -1;
+    }
+}
     // Metodo para añadir la cartelera de peliculas
     static boolean añadirACatelera(int peliculaSeleccionada, ArrayList<Pelicula> peliculas, Cartelera cartelera,
             boolean sabadoTiempoAcabado, boolean domingoTiempoAcabado) {

@@ -46,22 +46,17 @@ public class Cartelera {
     public static void mostrarCartelera() {
         System.out.println("---------------Sabado----------------");
         System.out.println("");
-        System.out.println("Nombre\tDuracion\tGenero\n");
+        System.out.println("Nombre\t\t\tDuracion\t\tGenero\n");
         for (int i = 0; i < peliculasSeleccionadasSabado.size(); i++) {
-
-            System.out.println(peliculasSeleccionadasSabado.get(i).getNombre() + "   "
-                    + peliculasSeleccionadasSabado.get(i).getDuracion() + "min   "
-                    + peliculasSeleccionadasSabado.get(i).getGenero());
+        System.out.println(peliculasSeleccionadasSabado.get(i).getNombre()+"\t\t\t"+peliculasSeleccionadasSabado.get(i).getDuracion()+ "min\t\t"+ peliculasSeleccionadasSabado.get(i).getGenero());
 
         }
         System.out.println("---------------Domingo----------------");
         System.out.println("");
-        System.out.println("Nombre\tDuracion\tGenero\n");
+        System.out.println("Nombre\t\t\tDuracion\t\tGenero\n");
         for (int i = 0; i < peliculasSeleccionadasDomingo.size(); i++) {
 
-            System.out.println(peliculasSeleccionadasDomingo.get(i).getNombre() + "   "
-                    + peliculasSeleccionadasDomingo.get(i).getDuracion() + "min   "
-                    + peliculasSeleccionadasDomingo.get(i).getGenero());
+        System.out.println(peliculasSeleccionadasDomingo.get(i).getNombre() +"\t\t\t"+ peliculasSeleccionadasDomingo.get(i).getDuracion() + "min\t\t"+ peliculasSeleccionadasDomingo.get(i).getGenero());
 
         }
 
